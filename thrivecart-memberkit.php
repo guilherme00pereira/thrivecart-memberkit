@@ -3,7 +3,7 @@
  * Plugin Name: Thrivecart and MemberKit Integration
  * Plugin URI: #
  * Description: Plugin to integrate Thrivecart and MemberKit, sending new users to MemberKit after purchase.
- * Version: 0.1.0
+ * Version: 0.1.1
  * Author: G28 - Guilherme Pereira
  * Author URI: http://www.g28.com.br
  *

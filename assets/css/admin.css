@@ -1,0 +1,15 @@
+.ui-tabs-active .nav-tab {
+    background-color: white;
+    color: #2271B1;
+    border-bottom: 1px solid white;
+    margin-bottom: -1px;
+}
+
+.tcmk-tab-content {
+    background-color: white;
+    padding: 20px;
+}
+
+#tcmk-tabs li {
+    margin-bottom: 0px;
+}

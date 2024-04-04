@@ -7,7 +7,7 @@ class AdminController {
 	public function __construct()
 	{
 		add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
-        add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
+        add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'), 99);
 	}
 
 	public function add_admin_menu(): void
@@ -34,12 +34,12 @@ class AdminController {
     {
         wp_enqueue_style(
             Plugin::getAssetsPrefix() . 'admin-style',
-            Plugin::getAssetsUrl() . 'assets/css/admin.css'
+            Plugin::getAssetsUrl() . 'css/admin.css',
         );
         wp_enqueue_script(
             Plugin::getAssetsPrefix() . 'admin-script',
-            Plugin::getAssetsUrl() . 'assets/js/admin.js',
-            array('jquery'),
+            Plugin::getAssetsUrl() . 'js/admin.js',
+            array('jquery', 'jquery-ui-tabs'),
             Plugin::getVersion(),
             true
         );
