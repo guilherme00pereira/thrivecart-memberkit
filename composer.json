@@ -1,0 +1,18 @@
+{
+    "name": "g28/thrivecart-memberkit",
+    "autoload": {
+        "psr-4": {
+            "G28\\ThriveCartMemberKit\\": "src/"
+        },
+        "files": [
+            "src/startup.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Guilherme Pereira",
+            "email": "guilherme00pereira@gmail.com"
+        }
+    ],
+    "require": {}
+}
