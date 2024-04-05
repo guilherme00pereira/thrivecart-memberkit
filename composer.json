@@ -14,5 +14,7 @@
             "email": "guilherme00pereira@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "thrivecart/php-api": "^1.0"
+    }
 }

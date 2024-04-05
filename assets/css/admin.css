@@ -11,5 +11,35 @@
 }
 
 #tcmk-tabs li {
-    margin-bottom: 0px;
+    margin-bottom: 0;
+}
+
+.integration-selects {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.integration-selects-box {
+    display: flex;
+    flex-direction: column;
+}
+
+.integration-selects-box select {
+    width: 400px;
+}
+
+.integration-list {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+#logFileContent {
+    margin: 0;
+    padding: 2rem;
+    height: 400px;
+    background-color: white;
+    border: 1px solid #DCDCDE;
+    overflow-y: auto;
 }

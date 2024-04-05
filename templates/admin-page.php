@@ -1,5 +1,5 @@
 <?php
-
+use G28\ThriveCartMemberKit\Plugin;
 ?>
 <div class="wrap">
     <h1>ThriveCart MemberKit</h1>
@@ -7,25 +7,26 @@
     <div id="tcmk-tabs">
         <ul class="nav-tab-wrapper">
             <li>
-                <a href="#tab1" class="nav-tab">Settings</a>
+                <a href="#tab1" class="nav-tab">Integration</a>
             </li>
             <li>
                 <a href="#tab2" class="nav-tab">Logs</a>
             </li>
         </ul>
+
+
         <div id="tab1" class="tcmk-tab-content">
-            <h3>Tab 1 Content</h3>
-            <form method="post" action="options.php">
-                <?php
-                settings_fields('thrivecart-memberkit-settings');
-                do_settings_sections('thrivecart-memberkit-settings');
-                submit_button();
-                ?>
-            </form>
+            <h3>Integração</h3>
+            <?php include_once sprintf("%sintegration-partial.php", Plugin::getTemplateDir()); ?>
         </div>
+
+
         <div id="tab2" class="tcmk-tab-content">
-            <h3>Tab 2 Content</h3>
+            <h3>Logs</h3>
+            <?php include_once sprintf("%slog-partial.php", Plugin::getTemplateDir()); ?>
         </div>
+
+
     </div>
 
 </div>

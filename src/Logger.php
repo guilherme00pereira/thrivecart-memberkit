@@ -6,13 +6,12 @@ class Logger
 {
     private static ?Logger $_instance = null;
     private string $logFile;
-    const LOG_DIR = TCMK_PLUGIN_PATH . "logs/";
 
     public function __construct()
     {
         $this->logFile = "log_" . date("Ymd") . ".txt";
-        if(!file_exists(self::LOG_DIR . $this->logFile)) {
-            file_put_contents(self::LOG_DIR . $this->logFile, "");
+        if(!file_exists(Plugin::getLogDir() . $this->logFile)) {
+            file_put_contents(Plugin::getLogDir() . $this->logFile, "");
         }
     }
 
@@ -23,21 +22,23 @@ class Logger
         return self::$_instance;
     }
 
-    public function add( string $message ) {
+    public function add( string $message ): void
+    {
         date_default_timezone_set('America/Sao_Paulo');
         $timestamp    = date('d/m/Y h:i:s A');
-        $actualOutput = file_get_contents( self::LOG_DIR . $this->logFile );
+        $actualOutput = file_get_contents( Plugin::getLogDir() . $this->logFile );
         $output = "[ $timestamp ] $message" . PHP_EOL . $actualOutput;
-        file_put_contents( self::LOG_DIR . $this->logFile, $output);
+        file_put_contents( Plugin::getLogDir() . $this->logFile, $output);
     }
 
-    public function clear(  ) {
-        file_put_contents( self::LOG_DIR . $this->logFile, "");
+    public function clear(): void
+    {
+        file_put_contents( Plugin::getLogDir() . $this->logFile, "");
     }
 
     public function getLogContent(): string
     {
-        $filepath = self::LOG_DIR . $this->logFile;
+        $filepath = Plugin::getLogDir() . $this->logFile;
         return nl2br(file_get_contents( $filepath ));
     }
 }
