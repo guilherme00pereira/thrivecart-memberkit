@@ -212,6 +212,7 @@ class Api {
     // Default timeout is 10 seconds.
     $http_options += [
       'timeout' => 20,
+      'verify' => false,
     ];
 
     $client = new ThriveCartGuzzleHttpClient($http_options);

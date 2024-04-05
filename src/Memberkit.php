@@ -6,21 +6,34 @@ use Exception;
 
 class Memberkit
 {
-	const API_URL = "https://memberkit.com.br/api/v1/";
-	const MEMBERKIT_API_KEY = "W5oGXK99YMMiHWJRfeW5WAkp";
+	//const API_URL = "https://memberkit.com.br/api/v1/";
+	//const MEMBERKIT_API_KEY = "W5oGXK99YMMiHWJRfeW5WAkp";
+
+    private string $apiUrl;
+    private string $apiKey;
 
 	public function __construct()
 	{
+        $url = Options::getInstance()->getSettings()[Plugin::getMemberkitApiUrl()];
+        $key = Options::getInstance()->getSettings()[Plugin::getMemberkitApiKey()];
 
+        if( empty( $url ) || empty( $key ) ) {
+            throw new Exception( "Memberkit API Key or URL not set" );
+        } else {
+            $this->apiUrl = $url;
+            $this->apiKey = $key;
+        }
 	}
 
     public function getClassroms(): array
     {
+        
+
         $classrooms = [];
         try {
-            $resp = wp_remote_get( self::API_URL . 'classrooms', [
+            $resp = wp_remote_get( $this->apiUrl . 'classrooms', [
                 'body' => [
-                    'api_key' => self::MEMBERKIT_API_KEY
+                    'api_key' => $this->apiKey
                 ]
             ]);
 

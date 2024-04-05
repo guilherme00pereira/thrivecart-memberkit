@@ -7,10 +7,15 @@ use ThriveCart\Api;
 class Thrivecart
 {
     private $client;
-    const THRIVECART_API_KEY = '13IKAEYV-JSCUFXPI-AONUCONY-2ZA822Q9';
+    //const THRIVECART_API_KEY = '13IKAEYV-JSCUFXPI-AONUCONY-2ZA822Q9';
     public function __construct()
     {
-        $this->client = new Api(self::THRIVECART_API_KEY);
+        $k = Options::getInstance()->getThrivecartApiKey();
+        if (empty($k)) {
+            throw new \Exception("Thrivecart API Key not set");
+        } else {
+            $this->client = new Api($k);
+        }
     }
 
     public function list_products(): array

@@ -10,7 +10,10 @@ use G28\ThriveCartMemberKit\Plugin;
                 <a href="#tab1" class="nav-tab">Integration</a>
             </li>
             <li>
-                <a href="#tab2" class="nav-tab">Logs</a>
+                <a href="#tab2" class="nav-tab">Settings</a>
+            </li>
+            <li>
+                <a href="#tab3" class="nav-tab">Logs</a>
             </li>
         </ul>
 
@@ -22,6 +25,11 @@ use G28\ThriveCartMemberKit\Plugin;
 
 
         <div id="tab2" class="tcmk-tab-content">
+            <h3>Configurações</h3>
+            <?php include_once sprintf("%ssettings-partial.php", Plugin::getTemplateDir()); ?>
+        </div>
+
+        <div id="tab3" class="tcmk-tab-content">
             <h3>Logs</h3>
             <?php include_once sprintf("%slog-partial.php", Plugin::getTemplateDir()); ?>
         </div>

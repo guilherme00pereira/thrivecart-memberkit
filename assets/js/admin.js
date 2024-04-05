@@ -43,4 +43,27 @@
             )
         }
     })
+
+    $('#btn-settings').click(function () {
+        $('#loading-settings').addClass('is-active');
+        const params = {
+            action: obj.action_save_settings,
+            nonce: obj.nonce,
+            thrivecart_api_key: $('#thrivecart_api_key').val(),
+            memberkit_api_key: $('#memberkit_api_key').val(),
+            memberkit_api_url: $('#memberkit_api_url').val(),
+        };
+        $.post(
+            obj.ajax_url,
+            params,
+            function (res) {
+                if (res.success) {
+                    console.log('Settings saved');
+                } else {
+                    console.log(res.data.message);
+                }
+                $('#loading-settings').removeClass('is-active');
+            }, 'json');
+    });
+
 })(jQuery);
