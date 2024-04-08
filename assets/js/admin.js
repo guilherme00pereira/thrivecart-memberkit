@@ -10,7 +10,11 @@
         const pname = $('#product_id option:selected').text();
         const cname = $('#classroom_id option:selected').text();
         if (pid === '' || cid === '') {
-            alert('Please enter both Product ID and Classroom ID');
+            alert('Ingrese el ID del producto y el ID del grupo.');
+            $('#loading-integrate').removeClass('is-active');
+        } else if (alreadyIntegrated(pid, cid) === true) {
+            alert('Este producto y grupo ya están integrados.');
+            $('#loading-integrate').removeClass('is-active');
         } else {
             const params = {
                 action: obj.action_save_integration,
@@ -25,7 +29,7 @@
                 params,
                 function (res) {
                     if (res.success) {
-                        console.log('Integration successful');
+                        window.location.reload()
                     } else {
                         console.log(res.data.message);
                     }
@@ -39,7 +43,20 @@
             const pid = $(this).data('product')
             const cid = $(this).data('classroom')
             $.post(
-
+                obj.ajax_url,
+                {
+                    action: obj.action_remove_integration,
+                    nonce: obj.nonce,
+                    product_id: pid,
+                    classroom_id: cid
+                },
+                function (res) {
+                    if (res.success) {
+                        window.location.reload()
+                    } else {
+                        tcmkErrorMessage(res.data.message);
+                    }
+                }, 'json'
             )
         }
     })
@@ -58,12 +75,31 @@
             params,
             function (res) {
                 if (res.success) {
-                    console.log('Settings saved');
+                    $('#settings-message-container').html(tcmkSuccessMessage('La configuración ha sido guardada.'));
                 } else {
-                    console.log(res.data.message);
+                    $('#settings-message-container').html(tcmkErrorMessage(res.data.message));
                 }
                 $('#loading-settings').removeClass('is-active');
             }, 'json');
     });
 
+    function alreadyIntegrated(pid, cid) {
+        let r = false;
+        $('.integration-row').each(function () {
+            const code = pid.toString() + cid.toString();
+            if ($(this).data('set') == code) {
+                r = true;
+            }
+        });
+        return r;
+    }
+
 })(jQuery);
+
+function tcmkErrorMessage(message) {
+    return `<div class="notice notice-error is-dismissible"><p>${message}</p></div>`;
+}
+
+function tcmkSuccessMessage(message) {
+    return `<div class="notice notice-success is-dismissible"><p>${message}</p></div>`;
+}

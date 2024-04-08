@@ -22,7 +22,7 @@ class AdminController
             'manage_options',
             'thrivecart-memberkit',
             array($this, 'admin_page'),
-            'dashicons-admin-generic',
+            'dashicons-admin-links',
             6
         );
     }
@@ -34,10 +34,26 @@ class AdminController
             $tc_products = $thrivecart->list_products();
         } catch (\Exception $e) {
             Logger::getInstance()->add("ERROR | Admin Page => " . $e->getMessage());
-            $tc_products = [];
+            $tc_products = [
+                [
+                    'id' => 0,
+                    'name' => 'No se pueden cargar los produtos. recargar la pagina.'
+                ]
+            ];
         }
-        $memberkit = new Memberkit();
-        $classrooms = $memberkit->getClassroms();
+        try {
+            $memberkit = new Memberkit();
+            $classrooms = $memberkit->getClassroms();
+        } catch (\Exception $e) {
+            Logger::getInstance()->add("ERROR | Admin Page => " . $e->getMessage());
+            $classrooms = [
+                [
+                    'id' => 0,
+                    'name' => 'No se pueden cargar los grupos. recargar la pagina.'
+                ]
+            ];
+        }
+
         $logs = Logger::getInstance()->getLogContent();
         $integrations = Options::getInstance()->getIntegrations();
         $settings = Options::getInstance()->getSettings();
@@ -64,6 +80,7 @@ class AdminController
             'ajax_url' => admin_url('admin-ajax.php'),
             'tcmk_nonce' => wp_create_nonce('tcmk_nonce'),
             'action_save_integration' => 'save_integration',
+            'action_remove_integration' => 'remove_integration',
             'action_save_settings' => 'save_settings'
         ]);
     }

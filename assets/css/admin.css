@@ -10,6 +10,10 @@
     padding: 20px;
 }
 
+.tcmk-tab-content h4 {
+    padding-bottom: 18px;
+}
+
 #tcmk-tabs li {
     margin-bottom: 0;
 }
@@ -42,4 +46,8 @@
     background-color: white;
     border: 1px solid #DCDCDE;
     overflow-y: auto;
+}
+
+#settings-message-container {
+    margin-top: 20px;
 }

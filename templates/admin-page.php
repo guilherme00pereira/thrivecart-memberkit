@@ -7,10 +7,10 @@ use G28\ThriveCartMemberKit\Plugin;
     <div id="tcmk-tabs">
         <ul class="nav-tab-wrapper">
             <li>
-                <a href="#tab1" class="nav-tab">Integration</a>
+                <a href="#tab1" class="nav-tab">Integración</a>
             </li>
             <li>
-                <a href="#tab2" class="nav-tab">Settings</a>
+                <a href="#tab2" class="nav-tab">Ajustes</a>
             </li>
             <li>
                 <a href="#tab3" class="nav-tab">Logs</a>
@@ -19,13 +19,13 @@ use G28\ThriveCartMemberKit\Plugin;
 
 
         <div id="tab1" class="tcmk-tab-content">
-            <h3>Integração</h3>
+            <h3>Gestionar la integración entre los productos ThriveCart y los grupos MemberKit</h3>
             <?php include_once sprintf("%sintegration-partial.php", Plugin::getTemplateDir()); ?>
         </div>
 
 
         <div id="tab2" class="tcmk-tab-content">
-            <h3>Configurações</h3>
+            <h3>Ajustes </h3>
             <?php include_once sprintf("%ssettings-partial.php", Plugin::getTemplateDir()); ?>
         </div>
 

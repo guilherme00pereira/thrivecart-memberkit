@@ -6,13 +6,13 @@ use Exception;
 
 class Memberkit
 {
-	//const API_URL = "https://memberkit.com.br/api/v1/";
-	//const MEMBERKIT_API_KEY = "W5oGXK99YMMiHWJRfeW5WAkp";
-
     private string $apiUrl;
     private string $apiKey;
 
-	public function __construct()
+    /**
+     * @throws Exception
+     */
+    public function __construct()
 	{
         $url = Options::getInstance()->getSettings()[Plugin::getMemberkitApiUrl()];
         $key = Options::getInstance()->getSettings()[Plugin::getMemberkitApiKey()];
@@ -27,8 +27,6 @@ class Memberkit
 
     public function getClassroms(): array
     {
-        
-
         $classrooms = [];
         try {
             $resp = wp_remote_get( $this->apiUrl . 'classrooms', [
@@ -49,30 +47,50 @@ class Memberkit
                 }
             }
         } catch ( Exception $e ) {
-            Logger::getInstance()->add( "ERROR: " .$e->get_error_code() . " | Get Memberkit Classrooms => " . $e->get_error_code() );
+            Logger::getInstance()->add( "ERROR: " .$e->getCode() . " | Get Memberkit Classrooms => " . $e->getMessage() );
         }
         return $classrooms;
     }
-	public function addUser( $name, $mail, $ids, $course_string ): void
+	public function addUser( $product_id, $customer ): void
     {
-		$params = [
-			'body' => [
-				'full_name'     => $name,
-				'email'         => $mail,
-				'status'        => 'active',
-				'blocked'       => false,
-				'classroom_ids' => $ids,
-				'api_key'       => self::MEMBERKIT_API_KEY
-			],
-		];
-		$resp = wp_remote_post( self::API_URL . 'users', $params );
-		if( is_wp_error( $resp ) ) {
-			Logger::getInstance()->add( "ERROR: " .$resp->get_error_code() . " | Add User Memberkit => " . $resp->get_error_message() );
-		} else {
-			$userData = json_decode( wp_remote_retrieve_body( $resp ) );;
-			Logger::getInstance()->add(  "User " . $userData->full_name .
-			                             " has been succesfully enrolled on classrooms: " . $course_string);
-		}
-	}
+        $integrations = Options::getInstance()->getIntegrations();
+        $course_string = "";
+        $ids = [];
+        foreach ( $integrations as $integration ) {
+            if( $integration['product']['id'] == $product_id ) {
+                $ids[] = $integration['classroom']['id'];
+                $course_string .= $integration['classroom']['name'] . ', ';
+            }
+        }
+
+        Logger::getInstance()->add("MEMBERKIT IDS: " . json_encode($ids));
+        if( empty( $ids ) ) {
+            Logger::getInstance()->add("MEMBERKIT: No classrooms found for product " . $product_id);
+        } else {
+            Logger::getInstance()->add("MEMBERKIT: Enrolling user " . $customer['name'] . " on classrooms: " . $course_string);
+
+            $course_string = rtrim($course_string, ', ');
+
+            $params = [
+                'body' => [
+                    'full_name' => $customer['name'],
+                    'email' => $customer['email'],
+                    'status' => 'active',
+                    'blocked' => false,
+                    'classroom_ids' => $ids,
+                    'api_key' => $this->apiKey
+                ],
+            ];
+            $resp = wp_remote_post($this->apiUrl . 'users', $params);
+            if (is_wp_error($resp)) {
+                Logger::getInstance()->add("ERROR: " . $resp->get_error_code() . " | Add User Memberkit => " . $resp->get_error_message());
+            } else {
+                $userData = json_decode(wp_remote_retrieve_body($resp));;
+                Logger::getInstance()->add("User " . $userData->full_name .
+                    " has been succesfully enrolled on classrooms: " . $course_string);
+            }
+        }
+    }
+
 
 }

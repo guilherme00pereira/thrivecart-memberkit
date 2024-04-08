@@ -3,7 +3,7 @@
         'name' => 'g28/thrivecart-memberkit',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '72d5a1406dfc94b9cfc119fa8a39bd30fcf1f0d4',
+        'reference' => '3b694f29cd64ad92fff92a7414098381da47194c',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'g28/thrivecart-memberkit' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '72d5a1406dfc94b9cfc119fa8a39bd30fcf1f0d4',
+            'reference' => '3b694f29cd64ad92fff92a7414098381da47194c',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

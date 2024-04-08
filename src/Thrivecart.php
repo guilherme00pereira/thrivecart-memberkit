@@ -2,17 +2,21 @@
 
 namespace G28\ThriveCartMemberKit;
 
+use Exception;
 use ThriveCart\Api;
 
 class Thrivecart
 {
-    private $client;
-    //const THRIVECART_API_KEY = '13IKAEYV-JSCUFXPI-AONUCONY-2ZA822Q9';
+    private Api $client;
+
+    /**
+     * @throws Exception
+     */
     public function __construct()
     {
         $k = Options::getInstance()->getThrivecartApiKey();
         if (empty($k)) {
-            throw new \Exception("Thrivecart API Key not set");
+            throw new Exception("Thrivecart API Key not set");
         } else {
             $this->client = new Api($k);
         }
@@ -29,7 +33,7 @@ class Thrivecart
                     'name' => $p['name'],
                 ];
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Logger::getInstance()->add("ERROR | Thrivecart getProducts => " . $e->getMessage());
         }
         return $products;
